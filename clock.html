@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background:#000;
+    }
+    #maru_fuchi{
+        width:290px;
+        height: 290px;
+        border:double 5px white;
+        opacity:0.7;
+        border-radius: 50%;
+        position:absolute;
+        top:106px;
+        left:106px;
+    }
+    #hour{
+     width:5px;
+        height:60px;
+        position: absolute;
+        top:195px;
+        left:251px;
+        background: white;
+        transform-origin: bottom ;
+    }
+    #minutes{
+        width:3px;
+        height:120px;
+        position: absolute;
+        top:135px;
+        left:252px;
+        background: white;
+        transform-origin: bottom ;
+    }
+    #seconds{
+    width:2px;
+    height:145px;
+    position: absolute;
+    top:110px;
+    left:254px;
+    background: white;
+/*        下を基準に回転*/
+    transform-origin: bottom ;
+    }
+</style>
+<!--############################################################################-->
+
+<!--//jsとIDを連携させる：変数定義######################################################################-->
+<script>
+let time = new Date();//リアルタイム取得
+let h =time.getHours();//0~23
+let m =time.getMinutes();//0~59
+let sec =time.getSeconds();//0~59
+//##############################################################################elm.style.MozTransform ="rotateX(30deg)"
+function text(){
+    let time = new Date();//リアルタイム取得
+    let h =time.getHours();//0~23
+    let m =time.getMinutes();//0~59
+    let sec =time.getSeconds();//0~59
+    let hour =document.getElementById("hour");//html&js連携
+    let minutes=document.getElementById("minutes");//html&js連携
+    let seconds=document.getElementById("seconds");//html&js連携
+    let hour_kakudo = h*(360/12);//角度設定
+    let minutes_kakudo =m*(360/60);//角度設定
+    let seconds_kakudo =sec*(360/60);//角度設定
+    //Shift＋＠バッククオート
+    hour.style.transform = `rotate(${hour_kakudo}deg)`;//${}＋を使わなくても埋め込める
+    minutes.style.transform = `rotate(${minutes_kakudo}deg)`;//transform移動・回転させる
+    seconds.style.transform = `rotate(${seconds_kakudo}deg)`;//deg角度
+}
+//##################################################################
+function text_2(){
+    let maru_canvas =document.getElementById("maru");
+    if(maru_canvas.getContext){
+        let context = maru_canvas.getContext("2d");
+        context.beginPath();
+        context.strokeStyle = 'rgb(77,255,0)'; //枠線の色は青
+        context.fillStyle = 'rgb(255,255,255,0.08)'; context.arc(260,220,150,0,360*Math.PI/180,false);//arc(中心x座標, 中心y座標, 半径の長さ, 円弧の開始角左, 円弧の終了角右360を*Math.PI/180ラジアンで変更, false時計回り）
+        context.fill();//黒で塗りつぶす
+    }
+//#####################################################################################
+}
+    function yumi(){
+            setInterval("text()",1000);//一秒一回無限
+    }
+//#############################################################################
+    function MouseClick(){
+        alert("aa");
+    }
+//let click_fuchi =document.getElementById("maru_fuchi");
+//click_fuchi.addEventListener('click',click_1);//イベント名,関数名
+//function click_1(){
+//    alert("aa");
+//}
+</script>
+<!--//################################################################################-->
+<!-- onLoad="text();text_2();"-->
+<body onLoad="yumi();text_2();">
+<canvas id="maru" width="500" height="500" >
+</canvas>
+<div id="maru_fuchi" onclick=MouseClick()>
+</div>
+    <div id="hour">
+    </div>
+    <div id="minutes" >
+    </div>
+    <div id="seconds" >
+    </div>
+</body>
+<!--
+JavaScrptの側では、getElementByIdメソッドでid名を指定してHTML側と関連付けます。 上記のサンプルHTMLソースでは、<canvas>要素に id="sample" という名前を付けていますが、 JavaScript側でも document.getElementById('sample') と指定することで、HTMLとJavaScriptを関連付けられます。 こうして取得したノードには、 var canvas の記述で canvas という名前を付けています。
+
+次に、getContextメソッドで描画機能を有効にします。 現在のところ、getContextメソッドに指定できる引数は '2d' のみです。 canvas.getContext('2d')の指定で、描画機能が利用できるように2Dコンテキストを取得しています。 つまり、HTMLソース中のid="sample"の部分に、描画機能を使用することを定義しています。
+
+
+「canvas」タグの色の指定方法は、「Style」属性で「RGB標記」で指定します。 (＊１６進法の「#ff0000」でも大丈夫です。)
+-->
+<!--
+//    if(maru_hari_canvas.getContext){
+//        let context = maru_hari_canvas.getContext("2d");
+//        context.beginPath();        // コンテクストのパスを初期化する
+//        context.moveTo(20, 20);    // 描画の始点(x,y)を設定
+//        context.lineTo(200, 20);   // 始点から指定した点まで線で繋ぐ
+//        context.stroke();           // 画面上に描画する
+//        context.fill();//黒で塗りつぶす
+//        context.fillStyle = 'rgb(255,255,255)';
+//
+//    if(maru_fuchi_canvas.getContext){
+//        let context = maru_fuchi.getContext("2d");
+//        context.beginPath();
+//        //context.strokeStyle = 'rgb(77,255,0)'; //枠線の色は青
+//        //context.fillStyle = 'rgb(5,255,255)'; 
+//        context.arc(250,250,150,0,360*Math.PI/180,false);//arc(中心x座標, 中心y座標, 半径の長さ, 円弧の開始角左, 円弧の終了角右360を*Math.PI/180ラジアンで変更, false時計回り）
+//        context.fill();//黒で塗りつぶす
+//}
+-->
+</html>
